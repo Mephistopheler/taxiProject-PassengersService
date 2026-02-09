@@ -38,9 +38,6 @@ public class Passengers {
         this.phone = phone;
     }
 
-    @Override
-    public String toString() {
-        return "Passengers{name='" + name + "', email='" + email + "', phone='" + phone + "'}";
-    }
+
 
 }
