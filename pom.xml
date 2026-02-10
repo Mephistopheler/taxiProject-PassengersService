@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.efcon</groupId>
-    <artifactId>myProject</artifactId>
+    <artifactId>taxiProject-PassengersService</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>myProject</name>
     <description>myProject</description>
