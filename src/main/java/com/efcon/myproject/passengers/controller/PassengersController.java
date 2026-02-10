@@ -33,7 +33,7 @@ public class PassengersController {
         return new ResponseEntity<>(toDto(savedPassenger), HttpStatus.CREATED);
 
 
-    };
+    }
 
     @GetMapping
     public ResponseEntity<List<PassengerDto>> findAllPassengers() {
@@ -41,9 +41,36 @@ public class PassengersController {
                 .stream()
                 .map(this::toDto)
                 .collect(Collectors.toList());
-        System.out.println(passengers);
+
         return ResponseEntity.ok(passengers);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PassengerDto> findPassengerById(@PathVariable long id) {
+        return passengersService.findPassengerById(id)
+                .map(passenger -> ResponseEntity.ok(toDto(passenger)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PassengerDto> updatePassenger(
+            @PathVariable long id,
+            @RequestBody PassengerDto passengerDto
+    ) {
+        return passengersService.updatePassenger(id, toEntity(passengerDto))
+                .map(passenger -> ResponseEntity.ok(toDto(passenger)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePassenger(@PathVariable long id) {
+        boolean deleted = passengersService.softDeletePassenger(id);
+        if (!deleted) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.noContent().build();
+    }
+
 
     private Passengers toEntity(PassengerDto passengerDto) {
         Passengers passenger = new Passengers();

@@ -19,18 +19,43 @@ public class PassengersService {
 
     public Passengers savePassenger(Passengers passengers){
 
-        return  passengersRepository.save(passengers);
+        passengers.setDeleted(false);
+        return passengersRepository.save(passengers);
 
     };
 
     public List<Passengers> findAllPassengers(){
 
-        return passengersRepository.findAll();
+        return passengersRepository.findAllByDeletedFalse();
 
     };
 
     public Optional<Passengers> findPassengerById(long id) {
-        return passengersRepository.findById(id);
+
+
+        return passengersRepository.findByIdAndDeletedFalse(id);
+    }
+
+    public Optional<Passengers> updatePassenger(long id, Passengers updatedPassenger) {
+        return passengersRepository.findByIdAndDeletedFalse(id)
+                .map(existingPassenger -> {
+                    existingPassenger.setName(updatedPassenger.getName());
+                    existingPassenger.setEmail(updatedPassenger.getEmail());
+                    existingPassenger.setPhone(updatedPassenger.getPhone());
+                    return passengersRepository.save(existingPassenger);
+                });
+    }
+
+    public boolean softDeletePassenger(long id) {
+        return passengersRepository.findByIdAndDeletedFalse(id)
+                .map(passenger -> {
+                    passenger.setDeleted(true);
+                    passengersRepository.save(passenger);
+                    return true;
+                })
+                .orElse(false);
+
+
     }
 
 }

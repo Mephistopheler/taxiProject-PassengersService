@@ -22,6 +22,9 @@ public class Passengers {
     @Column(name = "phone")
     private String phone;
 
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted = false;
+
 
 
     public Passengers() {

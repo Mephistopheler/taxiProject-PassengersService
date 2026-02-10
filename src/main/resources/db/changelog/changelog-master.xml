@@ -9,5 +9,6 @@
     <include file="db/changelog/create-changeset-passengers-table.xml"/>
     <include file="db/changelog/insert-changeset-passengers-table.xml"/>
     <include file="db/changelog/unique-email-changeset-passengers-table.xml"/>
+    <include file="db/changelog/add-deleted-column-passengers-table.xml"/>
 
 </databaseChangeLog>
